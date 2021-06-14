@@ -1,11 +1,11 @@
-# NEWMODGREGM FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
+# GREGMMODULE FOR [DOLIBARR ERP CRM](https://www.dolibarr.org)
 
 ## Features
 
 Description of the module...
 
 <!--
-![Screenshot newmodgregm](img/screenshot_newmodgregm.png?raw=true "NewModGregM"){imgmd}
+![Screenshot gregmmodule](img/screenshot_gregmmodule.png?raw=true "GregMModule"){imgmd}
 -->
 
 Other external modules are available on [Dolistore.com](https://www.dolistore.com).
@@ -58,11 +58,11 @@ Note: If this screen tell you there is no custom directory, check your setup is 
 
 ### From a GIT repository
 
-- Clone the repository in ```$dolibarr_main_document_root_alt/newmodgregm```
+- Clone the repository in ```$dolibarr_main_document_root_alt/gregmmodule```
 
 ```sh
 cd ....../custom
-git clone git@github.com:gitlogin/newmodgregm.git newmodgregm
+git clone git@github.com:gitlogin/gregmmodule.git gregmmodule
 ```
 
 ### <a name="final_steps"></a>Final steps
