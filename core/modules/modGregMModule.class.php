@@ -371,7 +371,7 @@ class modGregMModule extends DolibarrModules
             'fk_menu'=>'fk_mainmenu=gregmmodule,fk_leftmenu=gregmmodule_motogregm',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'New MotoGregM',
+            'titre'=>' New MotoGregM',
             'mainmenu'=>'gregmmodule',
             'leftmenu'=>'gregmmodule_motogregm',
             'url'=>'/gregmmodule/motogregm_card.php?action=create',
@@ -386,6 +386,7 @@ class modGregMModule extends DolibarrModules
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2
         );
+
 
 		/* END MODULEBUILDER LEFTMENU MOTOGREGM */
 		// Exports profiles provided by this module
