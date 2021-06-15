@@ -33,6 +33,11 @@ CREATE TABLE llx_gregmmodule_motogregm(
 	last_main_doc varchar(255), 
 	import_key varchar(14), 
 	model_pdf varchar(255), 
-	status smallint NOT NULL
+	status smallint NOT NULL, 
+	name varchar(50), 
+	number integer, 
+	circuit varchar(100), 
+	laps integer, 
+	level varchar(50)
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;
