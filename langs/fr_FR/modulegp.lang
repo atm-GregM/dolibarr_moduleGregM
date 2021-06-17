@@ -18,6 +18,8 @@
 #
 category = catégorie
 Jaquie = Michel
+labelname = Nom
+
 
 # Module label 'ModuleModuleGPName'
 ModuleModuleGPName = ModuleGP
