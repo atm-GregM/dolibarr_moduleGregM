@@ -311,8 +311,12 @@ class ActionsModuleGP
 	/* Add here any other hooked methods... */
     public function addMoreActionsButtons($parameters,&$action, $hookmanager)
     {
-        $url = '/modulegp/circuit_card.php?action=edit&amp;id=3';
+        //$productid = (GETPOST('rowid', 'int') ? GETPOST('rowid', 'int') : GETPOST('facid', 'int'));
+        $id_produit = $_GET['product'];
+        $url = '/modulegp/circuit_card.php?action=create&idmenu=528&mainmenu=modulegp&leftmenu=?edit&fk_product='. $_GET['id'];
+        $url2 = '/modulegp/reservation_card.php?action=create&idmenu=530&mainmenu=modulegp&leftmenu=?edit&fk_product='. $_GET['id'];
         print '<a class="butAction" href="'. dol_buildpath($url,1) .'">ModuleGP</a>';
+        print '<a class="butAction" href="'. dol_buildpath($url2,1) .'">Réservations</a>';
     }
 
 }
