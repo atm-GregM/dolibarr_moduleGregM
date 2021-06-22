@@ -118,8 +118,9 @@ class Reservation extends CommonObject
 		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
-        'fk_circuit' => array('type'=>'integer:Circuit:modulegp/class/circuit.class.php:1', 'label'=>'Circuit', 'enabled'=>'1', 'position'=>31, 'notnull'=>-1, 'visible'=>-1, 'index'=>1,),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1,'default'=>0, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
+        'fk_circuit' => array('type'=>'integer:Circuit:modulegp/class/circuit.class.php:1', 'label'=>'Circuit', 'enabled'=>'1', 'position'=>31, 'notnull'=>-1, 'visible'=>-1, 'default'=>1,'index'=>0,),
+        'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'Produit', 'enabled'=>'1', 'position'=>32, 'notnull'=>-1, 'visible'=>-1, 'index'=>0,'default'=>0,),
 	);
 	public $rowid;
 	public $ref;

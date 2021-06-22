@@ -17,6 +17,7 @@
 # Generic
 #
 category = category
+label = label
 
 # Module label 'ModuleModuleGPName'
 ModuleModuleGPName = ModuleGP
