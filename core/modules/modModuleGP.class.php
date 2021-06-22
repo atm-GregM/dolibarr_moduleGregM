@@ -447,32 +447,30 @@ class modModuleGP extends DolibarrModules
 		// Exports profiles provided by this module
 		$r = 1;
 		/* BEGIN MODULEBUILDER EXPORT CIRCUIT */
-		/*
+
 		$langs->load("modulegp@modulegp");
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
 		$this->export_label[$r]='CircuitLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
 		$this->export_icon[$r]='circuit@modulegp';
-		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
+		$this->export_fields_array[$r] = array(
+		    'p.ref' => "Ref",'p.label' => "Label",
+        );
+        $this->export_TypeFields_array[$r] = array(
+            'p.ref' => "Text",'p.label' => "Text",
+        );
+        $this->export_entities_array[$r] = array(
+            'p.ref' => "circuit",'p.label' => "circuit",
+        );
 		$keyforclass = 'Circuit'; $keyforclassfile='/modulegp/class/circuit.class.php'; $keyforelement='circuit@modulegp';
-		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		//$this->export_fields_array[$r]['t.fieldtoadd']='FieldToAdd'; $this->export_TypeFields_array[$r]['t.fieldtoadd']='Text';
-		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
-		//$keyforclass = 'CircuitLine'; $keyforclassfile='/modulegp/class/circuit.class.php'; $keyforelement='circuitline@modulegp'; $keyforalias='tl';
-		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='circuit'; $keyforaliasextra='extra'; $keyforelement='circuit@modulegp';
-		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='circuitline'; $keyforaliasextra='extraline'; $keyforelement='circuitline@modulegp';
-		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$this->export_dependencies_array[$r] = array('circuitline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
-		//$this->export_special_array[$r] = array('t.field'=>'...');
-		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
-		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
+
+		$this->export_dependencies_array[$r] = array('circuitline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
+		$this->export_special_array[$r] = array('t.field'=>'...');
+		$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
+		$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'circuit as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'circuit_line as tl ON tl.fk_circuit = t.rowid';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'modulegp_circuit as p';
 		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('circuit').')';
-		$r++; */
+		$r++;
 		/* END MODULEBUILDER EXPORT CIRCUIT */
 
 		// Imports profiles provided by this module
