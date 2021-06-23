@@ -202,7 +202,10 @@ class modModuleGP extends DolibarrModules
 		// 'user'             to add a tab in user view
 
 		// Dictionaries
-		$this->dictionaries = array();
+		$this->dictionaries = array(
+
+        );
+
 		/* Example:
 		$this->dictionaries=array(
 			'langs'=>'modulegp@modulegp',
@@ -389,6 +392,26 @@ class modModuleGP extends DolibarrModules
             // This is a Left menu entry
             'type'=>'left',
             'titre'=>' + Circuit',
+            'mainmenu'=>'modulegp',
+            'leftmenu'=>'modulegp_circuit',
+            'url'=>'/modulegp/circuit_card.php?action=create',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'modulegp@modulegp',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->modulegp->enabled',
+            // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_circuit',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>' Tags/catégories',
             'mainmenu'=>'modulegp',
             'leftmenu'=>'modulegp_circuit',
             'url'=>'/modulegp/circuit_card.php?action=create',

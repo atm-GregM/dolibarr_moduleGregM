@@ -126,7 +126,7 @@ class Circuit extends CommonObject
         'pro' => array('type'=>'smallint', 'label'=>'Circuit Pro', 'enabled'=>'1', 'position'=>7, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Oui', '1'=>'Non'),),
         'dispo' => array('type'=>'integer', 'label'=>'Disponibilité Circuit', 'enabled'=>'1', 'position'=>8, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'dispoOpen', '1'=>'dispoClose'),),
         'fk_product' => array('type'=>'integer:Product:product/class/product.class.php:1', 'label'=>'Produit', 'enabled'=>'1', 'position'=>31, 'notnull'=>-1, 'visible'=>-1, 'index'=>0,),
-        'fk_categorie' => array('type'=>'integer:Categories:categorie/class/categorie.class.php:1', 'label'=>'CATEGORIE', 'enabled'=>'1', 'position'=>31, 'notnull'=>-1, 'visible'=>-1, 'index'=>0,),
+        //'fk_categorie' => array('type'=>'integer:Categories:categorie/class/categorie.class.php:1', 'label'=>'CATEGORIE', 'enabled'=>'1', 'position'=>31, 'notnull'=>-1, 'visible'=>-1, 'index'=>0,),
 
 
 	);
