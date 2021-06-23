@@ -61,6 +61,7 @@ if (!$res) die("Include of main fails");
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
+require_once DOL_DOCUMENT_ROOT.'/categories/class/categorie.class.php';
 dol_include_once('/modulegp/class/circuit.class.php');
 dol_include_once('/modulegp/lib/modulegp_circuit.lib.php');
 
@@ -454,6 +455,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	}
 
 
+
 	// Buttons for actions
 
 	if ($action != 'presend' && $action != 'editline') {
@@ -514,13 +516,6 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 		}
 		print '</div>'."\n";
 	}
-    if ($conf->categorie->enabled) {
-        // Categories
-        print '<tr><td>'.$langs->trans("Categories").'</td><td colspan="3">';
-        $cate_arbo = $form->select_all_categories(Categorie::TYPE_PRODUCT, '', 'parent', 64, 0, 1);
-        print img_picto('', 'category').$form->multiselectarray('categories', $cate_arbo, GETPOST('categories', 'array'), '', 0, 'quatrevingtpercent widthcentpercentminusx', 0, 0);
-        print "</td></tr>";
-    }
 
 
 	// Select mail models is same action as presend
