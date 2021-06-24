@@ -201,9 +201,70 @@ class modModuleGP extends DolibarrModules
 		// 'thirdparty'       to add a tab in third party view
 		// 'user'             to add a tab in user view
 
-		// Dictionaries
-		$this->dictionaries = array(
+        // Dictionaries
+        if (! isset($conf->modulegp->enabled))
+        {
+            $conf->modulegp=new stdClass();
+            $conf->modulegp->enabled=0;
+        }
+        $this->dictionaries=array();
 
+        if (! isset($conf->modulegp->enabled)) $conf->modulegp->enabled=0;	// This is to avoid warnings
+
+        $this->dictionaries=array(
+            'langs'=>'modulegp@modulegp',
+
+            // List of tables we want to see into dictonnary editor
+            'tabname'=>array(
+                //MAIN_DB_PREFIX."c_webhost_type",
+                //MAIN_DB_PREFIX."c_webinstance_type"
+                MAIN_DB_PREFIX."modulegp_categories"
+            ),
+
+            // Label of tables
+            'tablib'=>array(
+                "DictionaryModulegp",
+                //"DictionaryWebHostType",
+                //"DictionaryWebInstanceType"
+            ),
+
+            // Request to select fields
+            'tabsql'=>array(
+              //  'SELECT f.rowid as rowid, f.code, f.label, f.active, f.picto FROM '.MAIN_DB_PREFIX.'c_webhost_type as f',
+                'SELECT f.rowid as rowid,f.code , f.label, f.active FROM '.MAIN_DB_PREFIX.'modulegp_categories as f',
+               // 'SELECT f.rowid as rowid, f.code, f.label, f.active, f.picto FROM '.MAIN_DB_PREFIX.'c_webinstance_type as f'
+
+            ),
+
+            // Sort order
+            'tabsqlsort'=>array(
+                "label ASC",
+            ),
+
+            // List of fields (result of select to show dictionary)
+            'tabfield'=>array(
+                "code,label",
+            ),
+
+            // List of fields (list of fields to edit a record)
+            'tabfieldvalue'=>array(
+                "code,label",
+            ),
+
+            // List of fields (list of fields for insert)
+            'tabfieldinsert'=>array(
+                "code,label",
+            ),
+
+            // Name of columns with primary key (try to always name it 'rowid')
+            'tabrowid'=>array(
+                "rowid",
+            ),
+
+            // Condition to show each dictionary
+            'tabcond'=>array(
+                $conf->modulegp->enabled,
+            )
         );
 
 		/* Example:
@@ -414,7 +475,27 @@ class modModuleGP extends DolibarrModules
             'titre'=>' Tags/catégories',
             'mainmenu'=>'modulegp',
             'leftmenu'=>'modulegp_circuit',
-            'url'=>'/modulegp/circuit_card.php?action=create',
+            'url'=>'/modulegp/modulegpcategories_card.php?action=create',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'modulegp@modulegp',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->modulegp->enabled',
+            // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_circuit',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'Liste Tags/catégories',
+            'mainmenu'=>'modulegp',
+            'leftmenu'=>'modulegp_circuit',
+            'url'=>'/modulegp/modulegpcategories_list.php?action=create',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'modulegp@modulegp',
             'position'=>1100+$r,
