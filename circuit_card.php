@@ -444,7 +444,29 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	//unset($object->fields['fk_soc']);					// Hide field already shown in banner
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_view.tpl.php';
 
-	// Other attributes. Fields from hook formObjectOptions and Extrafields.
+
+
+
+// Categories
+    print '<tr><td>'.$langs->trans("Categories").'</td><td>';
+    $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
+    $cate_circuit = array();
+    if($sql_cat) {
+        foreach ($sql_cat as $catItem){
+            $cate_circuit[$catItem->id] = $catItem->label;
+        }
+    }
+
+    $cate_circuit2 = array();
+    $sql_cat = $db->getRows('SELECT fk_modulegp_categories as id FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$object->id);
+    foreach ($sql_cat as $catItem){
+        $cate_circuit2[] = $catItem->id;
+        print ' '.($cate_circuit[$catItem->id]);
+    }
+
+
+
+    // Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';
 
 	print '</table>';
@@ -452,9 +474,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	print '</div>';
 
 	print '<div class="clearboth"></div>';
-
 	print dol_get_fiche_end();
-
 
 	/*
 	 * Lines
@@ -499,8 +519,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 				$reshook = $hookmanager->executeHooks('formAddObjectLine', $parameters, $object, $action); // Note that $action and $object may have been modified by hook
 			}
 		}
-
-		if (!empty($object->lines) || ($object->status == $object::STATUS_DRAFT && $permissiontoadd && $action != 'selectlines' && $action != 'editline'))
+        if (!empty($object->lines) || ($object->status == $object::STATUS_DRAFT && $permissiontoadd && $action != 'selectlines' && $action != 'editline'))
 		{
 			print '</table>';
 		}
@@ -508,25 +527,6 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 		print "</form>\n";
 	}
-
-// Categories
-    print '<tr><td>'.$langs->trans("Categories").'</td><td>';
-    $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
-    $cate_circuit = array();
-
-    if($sql_cat) {
-        foreach ($sql_cat as $catItem){
-            $cate_circuit[$catItem->id] = $catItem->label;
-        }
-    }
-
-    $cate_circuit2 = array();
-    $sql_cat = $db->getRows('SELECT fk_modulegp_categories as id FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$object->id);
-    foreach ($sql_cat as $catItem){
-        $cate_circuit2[] = $catItem->id;
-    }
-    print img_picto('', 'category').$form->multiselectarray('categories', $cate_circuit, $cate_circuit2, '', 0, 'minwidth300 quatrevingtpercent widthcentpercentminusx', 0, 0);
-    print "</td></tr>";
 
 	// Buttons for actions
 
