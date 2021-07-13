@@ -68,7 +68,10 @@ class Circuit extends CommonObject
 	const STATUS_DRAFT = 0;
 	const STATUS_VALIDATED = 1;
 	const STATUS_CANCELED = 9;
-
+    /**
+     * @var array
+     */
+    public $TCategoriesCircuits = array();
 
 	/**
 	 *  'type' field format ('integer', 'integer:ObjectClass:PathToClass[:AddCreateButtonOrNot[:Filter]]', 'sellist:TableName:LabelFieldName[:KeyFieldName[:KeyFieldParent[:Filter]]]', 'varchar(x)', 'double(24,8)', 'real', 'price', 'text', 'text:none', 'html', 'date', 'datetime', 'timestamp', 'duration', 'mail', 'phone', 'url', 'password')
@@ -443,6 +446,17 @@ class Circuit extends CommonObject
 			return -1;
 		}
 	}
+
+
+	public function fetchCats(){
+        $this->TCategoriesCircuits = array();
+
+        $sql_cat = $this->db->getRows('SELECT fk_modulegp_categories as id  FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$this->id);
+
+        if($sql_cat) {
+            $this->TCategoriesCircuits = $sql_cat;
+        }
+    }
 
 	/**
 	 * Update object into database

@@ -205,7 +205,9 @@ jQuery(document).ready(function() {
 	});
 });
 </script>';
-
+/**
+ * @var DoliDB $db
+ */
 
 // Part to create
 if ($action == 'create')
@@ -227,6 +229,19 @@ if ($action == 'create')
 
 	// Common attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_add.tpl.php';
+    if ($conf->categorie->enabled) {
+        // Categories
+        print '<tr><td>'.$langs->trans("Categories").'</td><td>';
+        $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
+        $cate_circuit = array();
+        if($sql_cat) {
+            foreach ($sql_cat as $catItem){
+                $cate_circuit[$catItem->id] = $catItem->label;
+            }
+        }
+        print img_picto('', 'category').$form->multiselectarray('categories', $cate_circuit, GETPOST('categories', 'array'), '', 0, 'minwidth300 quatrevingtpercent widthcentpercentminusx', 0, 0);
+        print "</td></tr>";
+    }
 
 	// Other attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_add.tpl.php';
@@ -264,6 +279,33 @@ if (($id || $ref) && $action == 'edit')
 
 	// Common attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_edit.tpl.php';
+
+
+
+    // Categories
+    print '<tr><td>'.$langs->trans("Categories").'</td><td>';
+    $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
+    $cate_circuit = array();
+    if($sql_cat) {
+        foreach ($sql_cat as $catItem){
+            $cate_circuit[$catItem->id] = $catItem->label;
+        }
+    }
+
+    $selectedCats = GETPOST('categories', 'array');
+    if(empty($selectedCats)){
+        $selectedCats = array();
+        $object->fetchCats();
+        if(!empty($object->TCategoriesCircuits)){
+            foreach ($object->TCategoriesCircuits as $item) {
+                $selectedCats[] = $item->id;
+            }
+        }
+    }
+
+    print img_picto('', 'category').$form->multiselectarray('categories', $cate_circuit, $selectedCats, '', 0, 'minwidth300 quatrevingtpercent widthcentpercentminusx', 0, 0);
+    print "</td></tr>";
+
 
 	// Other attributes
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_edit.tpl.php';
