@@ -126,6 +126,18 @@ $upload_dir = $conf->modulegp->multidir_output[isset($object->entity) ? $object-
 
 $parameters = array();
 $reshook = $hookmanager->executeHooks('doActions', $parameters, $object, $action); // Note that $action and $object may have been modified by some hooks
+
+//Mise à jour de la BDD  - Suppression/insertion des categories par rapport à l'id du Circuit/Piste
+if ($action === "update") {
+    $cate = GETPOST("categories", "array");
+    $sql_cat = $db->query('DELETE FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$object->id);
+    foreach ($cate as $catid) {
+        $sql_cat = $db->query('INSERT INTO '. MAIN_DB_PREFIX . 'modulegp_categories_circuits  (fk_modulegp_categories , fk_modulegp_circuits ) VALUES (' . $catid .', '.$object->id.')');
+    }
+    //var_dump($cate);
+    //exit();
+}
+
 if ($reshook < 0) setEventMessages($hookmanager->error, $hookmanager->errors, 'errors');
 
 if (empty($reshook))
@@ -145,6 +157,7 @@ if (empty($reshook))
 
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
 	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php';
+
 
 	// Actions when linking object each other
 	include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';
@@ -496,7 +509,24 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 		print "</form>\n";
 	}
 
+// Categories
+    print '<tr><td>'.$langs->trans("Categories").'</td><td>';
+    $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
+    $cate_circuit = array();
 
+    if($sql_cat) {
+        foreach ($sql_cat as $catItem){
+            $cate_circuit[$catItem->id] = $catItem->label;
+        }
+    }
+
+    $cate_circuit2 = array();
+    $sql_cat = $db->getRows('SELECT fk_modulegp_categories as id FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$object->id);
+    foreach ($sql_cat as $catItem){
+        $cate_circuit2[] = $catItem->id;
+    }
+    print img_picto('', 'category').$form->multiselectarray('categories', $cate_circuit, $cate_circuit2, '', 0, 'minwidth300 quatrevingtpercent widthcentpercentminusx', 0, 0);
+    print "</td></tr>";
 
 	// Buttons for actions
 
