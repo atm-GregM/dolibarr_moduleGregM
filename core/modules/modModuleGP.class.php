@@ -427,15 +427,16 @@ class modModuleGP extends DolibarrModules
 		);
 		*/
 
+//------------------------------------------------- Onglet gauche Circuits --------------------------------------------
         $this->menu[$r++]=array(
             // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'fk_menu'=>'fk_mainmenu=modulegp',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'Mes Circuits',
+            'titre'=>'Circuits',
             'mainmenu'=>'modulegp',
             'leftmenu'=>'modulegp_circuit',
-            'url'=>'/modulegp/circuit_list.php',
+            'url'=>'/modulegp/modulegpindex.php?',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'modulegp@modulegp',
             'position'=>1100+$r,
@@ -447,18 +448,21 @@ class modModuleGP extends DolibarrModules
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2,
         );
+
+        //------------------------------------------------- Onglet gauche Nouveau Circuit --------------------------------------------
+
         $this->menu[$r++]=array(
             // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_circuit',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>' + Circuit',
+            'titre'=>'Nouveau Circuit',
             'mainmenu'=>'modulegp',
-            'leftmenu'=>'modulegp_circuit',
+            'leftmenu'=>'modulegp',
             'url'=>'/modulegp/circuit_card.php?action=create',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'modulegp@modulegp',
-            'position'=>1100+$r,
+            'position'=>1101+$r,
             // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
             'enabled'=>'$conf->modulegp->enabled',
             // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
@@ -467,6 +471,32 @@ class modModuleGP extends DolibarrModules
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2
         );
+
+//------------------------------------------------- Onglet gauche Liste (Circuits) --------------------------------------------
+
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_circuit',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'Liste',
+            'mainmenu'=>'modulegp',
+            'leftmenu'=>'modulegp',
+            'url'=>'/modulegp/circuit_list.php',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'modulegp@modulegp',
+            'position'=>1102+$r,
+            // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->modulegp->enabled',
+            // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+
+//------------------------------------------------- Onglet gauche Tags/catégories --------------------------------------------
+
         $this->menu[$r++]=array(
             // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_circuit',
@@ -475,10 +505,10 @@ class modModuleGP extends DolibarrModules
             'titre'=>' Tags/catégories',
             'mainmenu'=>'modulegp',
             'leftmenu'=>'modulegp_circuit',
-            'url'=>'/modulegp/modulegpcategories_card.php?action=create',
+            'url'=>'/admin/dict.php?id=43',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'modulegp@modulegp',
-            'position'=>1100+$r,
+            'position'=>1103+$r,
             // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
             'enabled'=>'$conf->modulegp->enabled',
             // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
@@ -487,35 +517,18 @@ class modModuleGP extends DolibarrModules
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2
         );
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_circuit',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'Liste Tags/catégories',
-            'mainmenu'=>'modulegp',
-            'leftmenu'=>'modulegp_circuit',
-            'url'=>'/modulegp/modulegpcategories_list.php?action=create',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'modulegp@modulegp',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->modulegp->enabled',
-            // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
-            'perms'=>'1',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2
-        );
+
+//------------------------------------------------- Onglet gauche Réservations --------------------------------------------
+
         $this->menu[$r++]=array(
             // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'fk_menu'=>'fk_mainmenu=modulegp',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>'Mes Réservations',
+            'titre'=>'Réservations',
             'mainmenu'=>'modulegp',
             'leftmenu'=>'modulegp_reservation',
-            'url'=>'/modulegp/reservation_list.php',
+            'url'=>'/modulegp/modulegpindex.php?',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'modulegp@modulegp',
             'position'=>1100+$r,
@@ -527,15 +540,42 @@ class modModuleGP extends DolibarrModules
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2,
         );
+
+
+//------------------------------------------------- Onglet gauche Nouvelle Réservation --------------------------------------------
+
         $this->menu[$r++]=array(
             // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
             'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_reservation',
             // This is a Left menu entry
             'type'=>'left',
-            'titre'=>' + Réservation',
+            'titre'=>'Nouvelle Réservation',
             'mainmenu'=>'modulegp',
-            'leftmenu'=>'modulegp_reservation',
+            'leftmenu'=>'modulegp',
             'url'=>'/modulegp/reservation_card.php?action=create',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'modulegp@modulegp',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->modulegp->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->modulegp->enabled',
+            // Use 'perms'=>'$user->rights->modulegp->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+
+//------------------------------------------------- Onglet gauche Liste (Réservations) --------------------------------------------
+
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=modulegp,fk_leftmenu=modulegp_reservation',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'Liste',
+            'mainmenu'=>'modulegp',
+            'leftmenu'=>'modulegp',
+            'url'=>'/modulegp/reservation_list.php',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'modulegp@modulegp',
             'position'=>1100+$r,
