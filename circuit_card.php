@@ -156,8 +156,7 @@ if (empty($reshook))
 	$triggermodname = 'MODULEGP_CIRCUIT_MODIFY'; // Name of trigger action code to execute when we modify record
 
 	// Actions cancel, add, update, update_extras, confirm_validate, confirm_delete, confirm_deleteline, confirm_clone, confirm_close, confirm_setdraft, confirm_reopen
-	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php';
-
+	include DOL_DOCUMENT_ROOT.'/core/actions_addupdatedelete.inc.php'; // <----- Le truk qu'on cherche depuis 2 jours
 
 	// Actions when linking object each other
 	include DOL_DOCUMENT_ROOT.'/core/actions_dellink.inc.php';
@@ -218,62 +217,68 @@ jQuery(document).ready(function() {
 	});
 });
 </script>';
-/**
- * @var DoliDB $db
- */
+
 
 // Part to create
-if ($action == 'create')
-{
-	print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Circuit")), '', 'object_'.$object->picto);
+if ($action == 'create') {
+    print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("Circuit")), '', 'object_' . $object->picto);
 
-	print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">';
-	print '<input type="hidden" name="token" value="'.newToken().'">';
-	print '<input type="hidden" name="action" value="add">';
-	if ($backtopage) print '<input type="hidden" name="backtopage" value="'.$backtopage.'">';
-	if ($backtopageforcancel) print '<input type="hidden" name="backtopageforcancel" value="'.$backtopageforcancel.'">';
+    print '<form method="POST" action="' . $_SERVER["PHP_SELF"] . '">';
+    print '<input type="hidden" name="token" value="' . newToken() . '">';
+    print '<input type="hidden" name="action" value="add">';
+    if ($backtopage) print '<input type="hidden" name="backtopage" value="' . $backtopage . '">';
+    if ($backtopageforcancel) print '<input type="hidden" name="backtopageforcancel" value="' . $backtopageforcancel . '">';
 
-	print dol_get_fiche_head(array(), '');
+    print dol_get_fiche_head(array(), '');
 
-	// Set some default values
-	//if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
+    // Set some default values
+    //if (! GETPOSTISSET('fieldname')) $_POST['fieldname'] = 'myvalue';
 
-	print '<table class="border centpercent tableforfieldcreate">'."\n";
+    print '<table class="border centpercent tableforfieldcreate">' . "\n";
 
-	// Common attributes
-	include DOL_DOCUMENT_ROOT.'/core/tpl/commonfields_add.tpl.php';
+    // Common attributes
+    include DOL_DOCUMENT_ROOT . '/core/tpl/commonfields_add.tpl.php';
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------ GREG ADD CATEGORIES ---------------------------------------------------------//
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     if ($conf->categorie->enabled) {
         // Categories
-        print '<tr><td>'.$langs->trans("Categories").'</td><td>';
-        $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
-        $cate_circuit = array();
-        if($sql_cat) {
-            foreach ($sql_cat as $catItem){
-                $cate_circuit[$catItem->id] = $catItem->label;
+        print '<tr><td>' . $langs->trans("Categories") . '</td><td>'; // Affichage de tags/categories dans la page du Circuit
+        $sql_cat = $db->getRows('SELECT rowid as id, label FROM ' . MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1'); //sql_cat : Récupère dans la BDD les catégories activé du circuit
+        $cate_circuit = array(); //Création d'un tableau
+        if ($sql_cat) { //si sql_cat existe
+            foreach ($sql_cat as $catItem) { // Pour chaque éléments récupéré avec la requete
+                $cate_circuit[$catItem->id] = $catItem->label; //on envoi dans le tableau cate_circuit l'id de la categorie
             }
         }
-        print img_picto('', 'category').$form->multiselectarray('categories', $cate_circuit, GETPOST('categories', 'array'), '', 0, 'minwidth300 quatrevingtpercent widthcentpercentminusx', 0, 0);
+
+        //Afficher les catégories avec un multiselect
+        print img_picto('', 'category') . $form->multiselectarray('categories', $cate_circuit, GETPOST('categories', 'array'), '', 0, 'minwidth300 quatrevingtpercent widthcentpercentminusx', 0, 0);
         print "</td></tr>";
     }
+    $sql_cat = $db->query('INSERT INTO ' . MAIN_DB_PREFIX . 'modulegp_categories_circuits  (fk_modulegp_categories , fk_modulegp_circuits ) VALUES (' . $catid . ', ' . $object->id . ')');
 
-	// Other attributes
-	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_add.tpl.php';
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	print '</table>'."\n";
+    // Other attributes
+    include DOL_DOCUMENT_ROOT . '/core/tpl/extrafields_add.tpl.php';
 
-	print dol_get_fiche_end();
+    print '</table>' . "\n";
 
-	print '<div class="center">';
-	print '<input type="submit" class="button" name="add" value="'.dol_escape_htmltag($langs->trans("Create")).'">';
-	print '&nbsp; ';
-	print '<input type="'.($backtopage ? "submit" : "button").'" class="button button-cancel" name="cancel" value="'.dol_escape_htmltag($langs->trans("Cancel")).'"'.($backtopage ? '' : ' onclick="javascript:history.go(-1)"').'>'; // Cancel for create does not post form if we don't know the backtopage
-	print '</div>';
+    print dol_get_fiche_end();
 
-	print '</form>';
+    print '<div class="center">';
+    print '<input type="submit" class="button" name="add" value="' . dol_escape_htmltag($langs->trans("Create")) . '">';
+    print '&nbsp; ';
+    print '<input type="' . ($backtopage ? "submit" : "button") . '" class="button button-cancel" name="cancel" value="' . dol_escape_htmltag($langs->trans("Cancel")) . '"' . ($backtopage ? '' : ' onclick="javascript:history.go(-1)"') . '>'; // Cancel for create does not post form if we don't know the backtopage
+    print '</div>';
 
-	//dol_set_focus('input[name="ref"]');
+    print '</form>';
+    //dol_set_focus('input[name="ref"]');
+
 }
-
 // Part to edit record
 if (($id || $ref) && $action == 'edit')
 {
@@ -347,6 +352,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	// Confirmation to delete
 	if ($action == 'delete') {
 		$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, $langs->trans('DeleteCircuit'), $langs->trans('ConfirmDeleteObject'), 'confirm_delete', '', 0, 1);
+
 	}
 	// Confirmation to delete line
 	if ($action == 'deleteline') {
@@ -446,25 +452,26 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //------------------------------------------ GREG ADD CATEGORIES ---------------------------------------------------------//
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Categories
-    print '<tr><td>'.$langs->trans("Categories").'</td><td>';
-    $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1');
-    $cate_circuit = array();
+    print '<tr><td>'.$langs->trans("Categories").'</td><td>'; // Affichage de Tags/categories sur les fiches circuits
+    $sql_cat = $db->getRows('SELECT rowid as id, label FROM '. MAIN_DB_PREFIX . 'modulegp_categories WHERE active = 1'); //sql_cat : Récupère dans la BDD les catégories activé du circuit
+    $cate_circuit = array(); //Création d'un tableau
     if($sql_cat) {
-        foreach ($sql_cat as $catItem){
-            $cate_circuit[$catItem->id] = $catItem->label;
+        foreach ($sql_cat as $catItem){ // Pour chaque éléments récupéré avec la requete
+            $cate_circuit[$catItem->id] = $catItem->label; //on envoi dans le tableau cate_circuit l'id de la categorie
         }
     }
 
-    $cate_circuit2 = array();
-    $sql_cat = $db->getRows('SELECT fk_modulegp_categories as id FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$object->id);
-    foreach ($sql_cat as $catItem){
-        $cate_circuit2[] = $catItem->id;
-        print ' '.($cate_circuit[$catItem->id]);
+    $cate_circuit2 = array(); //Création d'un tableau
+    $sql_cat = $db->getRows('SELECT fk_modulegp_categories as id FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$object->id); // Récupère les categories depuis la table de liaison par rapport à l'id
+    foreach ($sql_cat as $catItem){ //Pour chaque élément récupéré
+        $cate_circuit2[] = $catItem->id; // on envoi dans le tableau cate_circuit2 l'id de la catégorie récupéré
+        print ' '.($cate_circuit[$catItem->id]); //On affiche sur la page
     }
-
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Other attributes. Fields from hook formObjectOptions and Extrafields.
 	include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_view.tpl.php';

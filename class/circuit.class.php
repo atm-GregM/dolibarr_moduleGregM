@@ -245,7 +245,17 @@ class Circuit extends CommonObject
 	 */
 	public function create(User $user, $notrigger = false)
 	{
-		return $this->createCommon($user, $notrigger);
+		$result = $this->createCommon($user, $notrigger);
+        //Mise à jour de la BDD  - Suppression/insertion des categories par rapport à l'id du Circuit/Piste
+        if ($result > 0) {
+            $cate = GETPOST("categories", "array");
+            $sql_cat = $this->db->query('DELETE FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$this->id);
+            foreach ($cate as $catid) {
+                $sql_cat = $this->db->query('INSERT INTO '. MAIN_DB_PREFIX . 'modulegp_categories_circuits  (fk_modulegp_categories , fk_modulegp_circuits ) VALUES (' . $catid .', '.$this->id.')');
+            }
+        }
+        return $result;
+
 	}
 
 	/**
@@ -479,8 +489,11 @@ class Circuit extends CommonObject
 	 */
 	public function delete(User $user, $notrigger = false)
 	{
-		return $this->deleteCommon($user, $notrigger);
-		//return $this->deleteCommon($user, $notrigger, 1);
+        $sql_cat = $this->db->query('DELETE FROM '. MAIN_DB_PREFIX . 'modulegp_categories_circuits WHERE fk_modulegp_circuits = '.$this->id);
+		//return $this->deleteCommon($user, $notrigger);
+		return $this->deleteCommon($user, $notrigger, 1);
+
+
 	}
 
 	/**
