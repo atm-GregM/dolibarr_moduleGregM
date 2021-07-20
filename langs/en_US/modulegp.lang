@@ -18,6 +18,7 @@
 #
 category = category
 label = label
+MentionSpec = Special Mention
 
 # Module label 'ModuleModuleGPName'
 ModuleModuleGPName = ModuleGP

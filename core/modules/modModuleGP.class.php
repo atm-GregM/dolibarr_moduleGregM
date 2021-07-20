@@ -657,9 +657,13 @@ class modModuleGP extends DolibarrModules
 		// Create extrafields during init
 		include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
 		$extrafields = new ExtraFields($this->db);
-        $result1=$extrafields->addExtraField('atmms',"Mention spécifique",'varchar',100,500,'propal',0,0,'','',1,'',1,'','','','',1,1,1);
-        $result2=$extrafields->addExtraField('atmms2',"Mention spécifique2",'varchar',100,500,'facture',0,0,'','',1,'',1,'','','','',1,1,1);
-        $result3=$extrafields->addExtraField('trois',"Test3",'varchar',100,500,'propal',0,0,'','',1,'',1,'','','','',1,1,1);
+        $result1=$extrafields->addExtraField('atmms',"MentionSpec",'varchar',100,500,'propal',0,0,'','',1,'',1,'','','','',1,1,1);
+        //$this->posxdesc+100;
+        //$this->tab_top+100;
+
+
+       // $result2=$extrafields->addExtraField('atmms2',"Mention spécifique2",'varchar',100,500,'facture',0,0,'','',1,'',1,'','','','',1,1,1);
+       // $result3=$extrafields->addExtraField('trois',"Test3",'varchar',100,500,'propal',0,0,'','',1,'',1,'','','','',1,1,1);
         //$result1=$extrafields->addExtraField('modulegp_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
 		//$result1=$extrafields->addExtraField('modulegp_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
 		//$result2=$extrafields->addExtraField('modulegp_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
