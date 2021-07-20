@@ -655,8 +655,12 @@ class modModuleGP extends DolibarrModules
 		if ($result < 0) return -1; // Do not activate module if error 'not allowed' returned when loading module SQL queries (the _load_table run sql with run_sql with the error allowed parameter set to 'default')
 
 		// Create extrafields during init
-		//include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-		//$extrafields = new ExtraFields($this->db);
+		include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
+		$extrafields = new ExtraFields($this->db);
+        $result1=$extrafields->addExtraField('atmms',"Mention spécifique",'varchar',100,500,'propal',0,0,'','',1,'',1,'','','','',1,1,1);
+        $result2=$extrafields->addExtraField('atmms2',"Mention spécifique2",'varchar',100,500,'facture',0,0,'','',1,'',1,'','','','',1,1,1);
+        $result3=$extrafields->addExtraField('trois',"Test3",'varchar',100,500,'propal',0,0,'','',1,'',1,'','','','',1,1,1);
+        //$result1=$extrafields->addExtraField('modulegp_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
 		//$result1=$extrafields->addExtraField('modulegp_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
 		//$result2=$extrafields->addExtraField('modulegp_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
 		//$result3=$extrafields->addExtraField('modulegp_myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'modulegp@modulegp', '$conf->modulegp->enabled');
